@@ -96,6 +96,8 @@ service iptables restart
 curl -sfL https://get.k3s.io | sh -s 
 ```
 
+### Verify k3s installation
+
 After the installation is completed, you can check if the k3s service is running by executing the below command.
 ```
 $ sudo systemctl status k3s
