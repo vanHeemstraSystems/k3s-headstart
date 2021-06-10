@@ -133,7 +133,7 @@ Hint: Some lines were ellipsized, use -l to show in full.
 ### Change file permissions of k3s.yaml
 ```
 $ cd /etc/ranger/k3s
-$ chmod 644 k3s.yaml
+$ sudo chmod 644 k3s.yaml
 ```
 
 ### Verify installation of kubectl (comes automatically with k3s installation)
