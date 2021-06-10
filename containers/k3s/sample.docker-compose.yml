@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  k3s:
+    build: .
+    container_name: "k3s"
+    privileged: true
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
