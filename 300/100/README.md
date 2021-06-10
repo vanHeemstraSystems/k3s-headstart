@@ -5,8 +5,9 @@ Based on "k3s.io/k3s" at https://github.com/k3s-io/k3s/issues/1019#issuecomment-
 I ([Lohann Paterno Coutinho Ferreira](https://github.com/Lohann)) finally got K3S working on Centos 7 and docker, it wasn't working even after replace firewalld by iptables.
 
 Facts:
-•	K3S doesn't support firewalld (see #1371)
-•	Docker containers can't connect to localhost on ***Docker-for-Linux***, after a lot debugging I realized that my iptables rules was dropping the docker container packages, it trigger the Crash Loop because local-path-provisioner and metrics-server needs to connect to k3s on internal host.
+
+-	K3S doesn't support firewalld (see #1371)
+-	Docker containers can't connect to localhost on ***Docker-for-Linux***, after a lot debugging I realized that my iptables rules was dropping the docker container packages, it trigger the Crash Loop because local-path-provisioner and metrics-server needs to connect to k3s on internal host.
 
 So I just added following rule to iptables in order to fix it:
 
