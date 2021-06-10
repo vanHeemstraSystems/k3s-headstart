@@ -95,3 +95,36 @@ service iptables restart
 ```
 curl -sfL https://get.k3s.io | sh -s 
 ```
+
+After the installation is completed, you can check if the k3s service is running by executing the below command.
+```
+$ sudo systemctl status k3s
+```
+
+It will show you something like this:
+```
+* [GREEN DOT] k3s.service - Lightweight Kubernetes
+   Loaded: loaded (/etc/systemd/system/k3s.service; enabled; vendor preset: disabled)
+   Active: active (running) since Thu 2021-06-10 11:51:19 UTC; 27min ago
+     Docs: https://k3s.io
+  Process: 4768 ExecStartPre=/sbin/modprobe overlay (code=exited, status=0/SUCCESS)
+  Process: 4763 ExecStartPre=/sbin/modprobe br_netfilter (code=exited, status=0/SUCCESS)
+ Main PID: 4771 (k3s-server)
+    Tasks: 9
+   Memory: 668.9M
+   CGroup: /system.slice/k3s.service
+           └─4771 /usr/local/bin/k3s server
+
+Jun 10 12:18:48 555642125a1c.mylabserver.com k3s[4771]: time="2021-06-10T12:18:48.832003377Z" level=info msg="...nd"
+Jun 10 12:18:49 555642125a1c.mylabserver.com k3s[4771]: time="2021-06-10T12:18:49.837054124Z" level=info msg="...nd"
+Jun 10 12:18:50 555642125a1c.mylabserver.com k3s[4771]: time="2021-06-10T12:18:50.841306661Z" level=info msg="...nd"
+Jun 10 12:18:51 555642125a1c.mylabserver.com k3s[4771]: time="2021-06-10T12:18:51.695300380Z" level=info msg="...te"
+Jun 10 12:18:51 555642125a1c.mylabserver.com k3s[4771]: time="2021-06-10T12:18:51.845131095Z" level=info msg="...nd"
+Jun 10 12:18:51 555642125a1c.mylabserver.com k3s[4771]: time="2021-06-10T12:18:51.877252567Z" level=info msg="...TC"
+Jun 10 12:18:52 555642125a1c.mylabserver.com k3s[4771]: time="2021-06-10T12:18:52.038675857Z" level=info msg="...TC"
+Jun 10 12:18:52 555642125a1c.mylabserver.com k3s[4771]: time="2021-06-10T12:18:52.045865380Z" level=error msg="Fa...
+Jun 10 12:18:52 555642125a1c.mylabserver.com k3s[4771]: time="2021-06-10T12:18:52.929377690Z" level=info msg="...nd"
+Jun 10 12:18:53 555642125a1c.mylabserver.com k3s[4771]: time="2021-06-10T12:18:53.933513681Z" level=info msg="...nd"
+Hint: Some lines were ellipsized, use -l to show in full.
+```
+
