@@ -18,18 +18,18 @@ Where 10.42.0.0/16 is the default k3s network CIDR, change it if you defined a d
 
 ## The Step-by-Step Solution:
 
-# Stop and remove k3s (if k3s was previously installed, otherwise skip this step)
+### Stop and remove k3s (if k3s was previously installed, otherwise skip this step)
 ```
 $ k3s-killall.sh
 $ k3s-uninstall.sh
 ```
 
-# Stop and remove all k3s containers (if k3s was previously installed, otherwise skip this step)
+### Stop and remove all k3s containers (if k3s was previously installed, otherwise skip this step)
 ```
 docker stop $(docker ps -a -q --filter "name=k8s_") | xargs docker rm
 ```
 
-# Replace firewalld by iptables
+### Replace firewalld by iptables
 ```
 $ systemctl stop firewalld
 $ systemctl disable firewalld
@@ -40,57 +40,57 @@ $ systemctl enable iptables
 
 Configure iptables rules, my setup is based on this article: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-basic-iptables-firewall-on-centos-6
 
-# Erase iptables rules
+### Erase iptables rules
 ```
 $ iptables -F
 ```
 
-# Block the most common attacks
+### Block the most common attacks
 ```
 $ iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
 $ iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
 $ iptables -A INPUT -p tcp --tcp-flags ALL ALL -j DROP
 ```
 
-# Enable outgoing connections
+### Enable outgoing connections
 ```
 $ iptables -I INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 $ iptables -A INPUT -i lo -j ACCEPT
 $ iptables -P OUTPUT ACCEPT
 ```
 
-# Open Traefik http and https ports
+### Open Traefik http and https ports
 ```
 $ iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 $ iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 ```
 
-# Open SSH port
+### Open SSH port
 ```
 $ iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
 ```
 
-# Block everything else
+### Block everything else
 ```
 $ iptables -P INPUT DROP
 ```
 
-# Here is where the magic happens, enable connections from k3s pods to your host internal ip:
+### Here is where the magic happens, enable connections from k3s pods to your host internal ip:
 ```
 $ iptables -A INPUT -s 10.42.0.0/16 -d <host_internal_ip>/32 -j ACCEPT
 ```
 
-# Save changes 
+### Save changes 
 ```
 $ iptables-save | sudo tee /etc/sysconfig/iptables
 ```
 
-# Restart iptables
+### Restart iptables
 ```
 service iptables restart
 ```
 
-# Install and run k3s (will auto-start after installation)
+### Install and run k3s (will auto-start after installation)
 ```
 curl -sfL https://get.k3s.io | sh -s 
 ```
