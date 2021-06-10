@@ -5,9 +5,9 @@ services:
     entrypoint: ["/bin/sh","-c"]
     command:
       - |
-          echo a
-          echo b
-          echo c
+          echo "alfa"
+          echo "bravo"
+          echo "charlie"
   k3s:
     build: .
     depends_on:
