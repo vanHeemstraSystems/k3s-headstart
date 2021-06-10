@@ -130,3 +130,13 @@ Jun 10 12:18:53 555642125a1c.mylabserver.com k3s[4771]: time="2021-06-10T12:18:5
 Hint: Some lines were ellipsized, use -l to show in full.
 ```
 
+## Change file permissions of k3s.yaml
+```
+$ cd /etc/ranger/k3s
+$ chmod 644 k3s.yaml
+```
+
+## Verify installation of kubectl (comes automatically with k3s installation)
+```
+$ kubectl --help
+```
