@@ -1,8 +1,17 @@
 version: "3.7"
 
 services:
+  pre-k3s:
+    entrypoint: ["/bin/sh","-c"]
+    command:
+      - |
+          echo a
+          echo b
+          echo c
   k3s:
     build: .
+    depends_on:
+      - "pre-k3s"
     container_name: "k3s"
     privileged: true
     ports:
