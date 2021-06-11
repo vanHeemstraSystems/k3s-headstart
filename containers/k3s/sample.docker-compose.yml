@@ -1,20 +1,22 @@
-version: "3.7"
+version: '3.7'
 
 services:
-  pre-k3s:
-    entrypoint: ["/bin/sh","-c"]
-    command:
-      - |
-          echo "alfa"
-          echo "bravo"
-          echo "charlie"
-  k3s:
+#  pre-k3s:
+#    entrypoint: ["/bin/sh","-c"]
+#    command:
+#      - |
+#          echo "alfa"
+#          echo "bravo"
+#          echo "charlie"
+  k3s-dind:
     build: .
-    depends_on:
-      - "pre-k3s"
-    container_name: "k3s"
+#    depends_on:
+#      - "pre-k3s"
+    container_name: 'k3s'
+    hostname: 'k3s'
     privileged: true
     ports:
-      - 80:80
-      - 443:443
-      - 8080:8080
+      - 8443:8443
+    environment:
+      - KUBECONFIG: ./k3sconfig
+      - K3S_API_PORT: 8443
