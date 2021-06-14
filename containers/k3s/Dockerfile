@@ -44,7 +44,7 @@ RUN HOST_INTERNAL_IP=`echo $(hostname -I) | sed 's/ *$//g'`
 RUN iptables -A INPUT -s 10.42.0.0/16 -d $HOST_INTERNAL_IP/32 -j ACCEPT
 
 # Save changes
-RUN iptables-save | sudo tee /etc/sysconfig/iptables
+RUN iptables-save | tee /etc/sysconfig/iptables
 
 # Restart iptables
 RUN service iptables restart
