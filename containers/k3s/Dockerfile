@@ -59,7 +59,7 @@ RUN systemctl status k3s
 RUN chmod 644 /etc/ranger/k3s/k3s.yaml
 
 # Verify installation of kubectl (comes automatically with k3s installation)
-RUN kubectl --help
+RUN kubectl --help > /dev/null
 
 # Force the container to keep running, for testing only!
 ENTRYPOINT ["tail", "-f", "/dev/null"]
