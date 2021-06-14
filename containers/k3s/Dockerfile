@@ -38,8 +38,8 @@ RUN iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
 RUN iptables -P INPUT DROP
 
 # Here is where the magic happens, enable connections from k3s pods to your host internal ip
-# Get host internal ip
-RUN HOST_INTERNAL_IP=$(hostname -I)
+# Get host internal ip without trailing spaces
+RUN HOST_INTERNAL_IP=`echo $(hostname -I) | sed 's/ *$//g'`
 # Run iptables -A INPUT -s 10.42.0.0/16 -d <host_internal_ip>/32 -j ACCEPT
 RUN iptables -A INPUT -s 10.42.0.0/16 -d $HOST_INTERNAL_IP/32 -j ACCEPT
 
