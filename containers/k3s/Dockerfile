@@ -13,7 +13,7 @@ RUN chmod a+x /usr/bin/systemctl
 RUN yum -y install iptables-services
 # Install initscripts for CentOS 7 that will be required after this step
 # See https://unix.stackexchange.com/questions/9314/no-such-file-or-directory-etc-init-d-functions
-RUN yum -y install -y initscripts
+RUN yum -y install initscripts
 RUN systemctl start iptables
 RUN systemctl enable iptables
 
