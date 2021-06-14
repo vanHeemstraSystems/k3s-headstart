@@ -43,10 +43,23 @@ RUN HOST_INTERNAL_IP=`echo $(hostname -I) | sed 's/ *$//g'`
 # Run iptables -A INPUT -s 10.42.0.0/16 -d <host_internal_ip>/32 -j ACCEPT
 RUN iptables -A INPUT -s 10.42.0.0/16 -d $HOST_INTERNAL_IP/32 -j ACCEPT
 
+# Save changes
+RUN iptables-save | sudo tee /etc/sysconfig/iptables
 
+# Restart iptables
+RUN service iptables restart
 
+# Install and run k3s (will auto-start after installation)
+RUN curl -sfL https://get.k3s.io | sh -s 
 
-# More code goes here ...
+# Verify k3s installation
+RUN systemctl status k3s
+
+# Change file permissions of k3s.yaml
+RUN chmod 644 /etc/ranger/k3s/k3s.yaml
+
+# Verify installation of kubectl (comes automatically with k3s installation)
+RUN kubectl --help
 
 # Force the container to keep running, for testing only!
 ENTRYPOINT ["tail", "-f", "/dev/null"]
