@@ -7,9 +7,15 @@ FROM centos:7
 COPY systemctl.py /usr/bin/systemctl 
 RUN chmod a+x /usr/bin/systemctl
 
+# To be save, install firewalld
+RUN yum -y install firewalld
+RUN systemctl unmask firewalld
+RUN systemctl enable firewalld
+RUN systemctl start firewalld
+
 # Replace firewalld by iptables
-# RUN systemctl stop firewalld # SKIP: Not required and throws an error
-# RUN systemctl disable firewalld # SKIP: Not required and throws an error
+RUN systemctl stop firewalld # SKIP: Not required and throws an error
+RUN systemctl disable firewalld # SKIP: Not required and throws an error
 RUN yum -y install iptables-services
 # Install initscripts for CentOS 7 that will be required after this step
 # See https://unix.stackexchange.com/questions/9314/no-such-file-or-directory-etc-init-d-functions
