@@ -37,8 +37,13 @@ RUN iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
 # Block everything else
 RUN iptables -P INPUT DROP
 
-# Here is where the magic happens, enable connections from k3s pods to your host internal ip:
+# Here is where the magic happens, enable connections from k3s pods to your host internal ip
+# Get the name of the first network device on the PCI bus
+RUN DEVICE=$(ls -l /sys/class/net | awk '$NF~/pci0/ { print $(NF-2); exit }')
+# Give the IP address of first network devices on the PCI bus
+RUN IPADDR=$(ip -br address show dev $DEVICE | awk '{print substr($3,1,index($3,"/")-1);}')
 # RUN iptables -A INPUT -s 10.42.0.0/16 -d <host_internal_ip>/32 -j ACCEPT
+RUN iptables -A INPUT -s 10.42.0.0/16 -d $IPADDR/32 -j ACCEPT
 
 
 
