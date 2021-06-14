@@ -47,7 +47,8 @@ RUN iptables -A INPUT -s 10.42.0.0/16 -d $HOST_INTERNAL_IP/32 -j ACCEPT
 RUN iptables-save | tee /etc/sysconfig/iptables
 
 # Restart iptables
-RUN service iptables restart
+RUN systemctl start iptables
+RUN systemctl enable iptables
 
 # Install and run k3s (will auto-start after installation)
 RUN curl -sfL https://get.k3s.io | sh -s 
