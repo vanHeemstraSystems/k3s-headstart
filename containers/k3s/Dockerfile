@@ -11,39 +11,39 @@ RUN chmod a+x /usr/bin/systemctl
 # RUN systemctl stop firewalld # SKIP: Not required and throws an error
 # RUN systemctl disable firewalld # SKIP: Not required and throws an error
 RUN yum -y install iptables-services
-RUN systemctl start iptables
-RUN systemctl enable iptables
+# RUN systemctl start iptables
+# RUN systemctl enable iptables
 
 # Erase iptables rules
-RUN iptables -F
+# RUN iptables -F
 
 # Block the most common attacks
-RUN iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
-RUN iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
-RUN iptables -A INPUT -p tcp --tcp-flags ALL ALL -j DROP
+# RUN iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
+# RUN iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
+# RUN iptables -A INPUT -p tcp --tcp-flags ALL ALL -j DROP
 
 # Enable outgoing connections
-RUN iptables -I INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-RUN iptables -A INPUT -i lo -j ACCEPT
-RUN iptables -P OUTPUT ACCEPT
+# RUN iptables -I INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+# RUN iptables -A INPUT -i lo -j ACCEPT
+# RUN iptables -P OUTPUT ACCEPT
 
 # Open Traefik http and https ports
-RUN iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
-RUN iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+# RUN iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+# RUN iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 
 # Open SSH port
-RUN iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+# RUN iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
 
 # Block everything else
-RUN iptables -P INPUT DROP
+# RUN iptables -P INPUT DROP
 
 # Here is where the magic happens, enable connections from k3s pods to your host internal ip
 # Get the name of the first network device on the PCI bus
-RUN DEVICE=$(ls -l /sys/class/net | awk '$NF~/pci0/ { print $(NF-2); exit }')
+# RUN DEVICE=$(ls -l /sys/class/net | awk '$NF~/pci0/ { print $(NF-2); exit }')
 # Give the IP address of first network devices on the PCI bus
-RUN IPADDR=$(ip -br address show dev $DEVICE | awk '{print substr($3,1,index($3,"/")-1);}')
-# RUN iptables -A INPUT -s 10.42.0.0/16 -d <host_internal_ip>/32 -j ACCEPT
-RUN iptables -A INPUT -s 10.42.0.0/16 -d $IPADDR/32 -j ACCEPT
+# RUN IPADDR=$(ip -br address show dev $DEVICE | awk '{print substr($3,1,index($3,"/")-1);}')
+# Run iptables -A INPUT -s 10.42.0.0/16 -d <host_internal_ip>/32 -j ACCEPT
+# RUN iptables -A INPUT -s 10.42.0.0/16 -d $IPADDR/32 -j ACCEPT
 
 
 
