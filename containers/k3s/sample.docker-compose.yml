@@ -5,7 +5,7 @@ services:
     build: .
     container_name: 'k3s'
     hostname: 'k3s'
-    privilieged: true
+    privileged: true
     ports:
       - 8443:8443
 #    environment:
