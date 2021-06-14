@@ -7,7 +7,7 @@ FROM centos:7
 COPY systemctl.py /usr/bin/systemctl 
 RUN chmod a+x /usr/bin/systemctl
 
-# To be save, install firewalld
+# To be certain of the existence of firewalld, install firewalld
 RUN yum -y install firewalld
 RUN systemctl unmask firewalld
 RUN systemctl enable firewalld
