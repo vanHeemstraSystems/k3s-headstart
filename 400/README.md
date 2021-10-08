@@ -4,7 +4,7 @@ Based on "Rancher's k3s - First steps" at https://gitlab.com/cloud-versity/ranch
 
 Video on "K3S (by Rancher) | Setup a lightweight Kubernetes Cluster in Minutes | Hands-on Tutorial" at https://www.youtube.com/watch?v=1hwGdey7iUU
 
-## 100 - Register and Setup Environment
+## 100 - Sign up and Setup Environment
 
 See [README.md](./100/README.md)
 
