@@ -1,6 +1,6 @@
 # 300 - Install K3S Worker
 
-Grab token from the master node to be able to add worked nodes to it:
+Grab token from the master node to be able to add worker nodes to it:
 
 ```
 cat /var/lib/rancher/k3s/server/node-token
