@@ -8,6 +8,6 @@ Sign up at https://login.linode.com/signup
 
 ## 200 - Setup Environment
 
-https://www.linode.com/docs/guides/platform/get-started/
+See also https://www.linode.com/docs/guides/getting-started/
 
 == WE ARE HERE ==
